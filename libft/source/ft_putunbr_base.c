@@ -1,0 +1,46 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_putunbr_base.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cgajean <cgajean@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/03 19:22:45 by cgajean           #+#    #+#             */
+/*   Updated: 2025/06/19 10:29:38 by cgajean          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "libft.h"
+
+static void	ft_printunbr_base(unsigned int nbr, int base, char *base_charset, \
+																int *count)
+{
+	long long	nb;
+
+	nb = nbr;
+	if (nb < 0)
+	{
+		*count += ft_putchar('-');
+		nb *= -1;
+	}
+	if (nb >= 16)
+	{
+		ft_printunbr_base(nb / 16, base, base_charset, count);
+		ft_printunbr_base(nb % 16, base, base_charset, count);
+	}
+	else
+		*count += ft_putchar(base_charset[nb]);
+}
+
+int	ft_putunbr_base(unsigned int nbr, char *base_charset)
+{
+	int	count;
+	int	base;
+
+	base = (int) ft_strlen(base_charset);
+	if (!base)
+		return (0);
+	count = 0;
+	ft_printunbr_base(nbr, base, base_charset, &count);
+	return (count);
+}
